@@ -14,18 +14,16 @@ public class PlayerTilt : MonoBehaviour {
 	ParticleSystem RightEngine;
 	ParticleSystem TopEngine;
 
-
-
-
-
 	public bool EnableMovement;
+    public Transform ParentTransform;
+    public Transform rotationcenter;
 
+    public float TurnAmount;
 
-	void Start()
+    void Start()
 	{
 		rb = GetComponent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
-
 
 	}
 
@@ -33,23 +31,15 @@ public class PlayerTilt : MonoBehaviour {
 	void Update() {
 		if (EnableMovement == true) {
 			tilt ();
+            VerticalMovement();
 		}
 
 
 
 	
-		//int layerMask =  6;
-		var GameObjectFloat = gameObject.transform.position;
-		RaycastHit hit;
-		if (Physics.Raycast (GameObjectFloat, Vector3.down, out hit)) {
-			gameObject.transform.Translate (0, (floatValue - hit.distance), 0);
-
-		}
-		Debug.DrawLine(GameObjectFloat, hit.point);
-
 
 	}
-
+    
 
 	void VerticalMovement()
 	{
@@ -62,14 +52,14 @@ public class PlayerTilt : MonoBehaviour {
 		if(Input.GetKey(KeyCode.DownArrow))
 		{
 			//Code for action on mouse moving down
-			transform.Translate(0, -0.1f,0);	
-			Debug.Log ("Mouse down");
+			transform.Translate(0, -0.5f,0);	
+			Debug.Log ("down");
 		}
 		else if (Input.GetKey(KeyCode.UpArrow))
 		{
 			//Code for action on mouse moving up
-			transform.Translate(0, 0.1f, 0);
-			Debug.Log ("Mouse up");
+			transform.Translate(0, 0.5f, 0);
+			Debug.Log ("up");
 		}
 	}
 
@@ -92,10 +82,11 @@ public class PlayerTilt : MonoBehaviour {
 		if (Input.GetKey(KeyCode.A)) 
 		{
 			animator.SetFloat ("XMovement", dampTimeLeft);
-			//transform.Translate (-0.25f, 0, 0);
+            ParentTransform.RotateAround(rotationcenter.transform.position, Vector3.up, -TurnAmount);
 
-		}
-		else 
+
+        }
+        else 
 		{
 			animator.SetFloat ("XMovement", dampTimeHorizontalIdle);
 
@@ -104,11 +95,10 @@ public class PlayerTilt : MonoBehaviour {
 		{
 	
 			animator.SetFloat ("XMovement",dampTimeRight);
-			//transform.Translate (0,0.25f, 0, 0);
+            ParentTransform.RotateAround(rotationcenter.transform.position, Vector3.up, TurnAmount);
 
-
-		}
-		 if (Input.GetKey(KeyCode.W))
+        }
+        if (Input.GetKey(KeyCode.W))
 		{
 			animator.SetFloat ("ZMovement",dampTimeForward);
 
