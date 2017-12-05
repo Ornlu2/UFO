@@ -22,7 +22,7 @@ public class PlayerTilt : MonoBehaviour {
 
     void Start()
 	{
-		rb = GetComponent<Rigidbody> ();
+		rb = GameObject.FindWithTag("Player").GetComponentInParent<Rigidbody> ();
 		animator = GetComponent<Animator> ();
 
 	}
@@ -102,11 +102,9 @@ public class PlayerTilt : MonoBehaviour {
 		{
 			animator.SetFloat ("ZMovement",dampTimeForward);
 
-			transform.Translate (0, 0, speed);
-
-
-		}
-		else
+			transform.Translate (0, 0.4f, speed);
+        }
+        else
 		{
 			animator.SetFloat ("ZMovement", dampTimeVerticalIdle);
 		}
@@ -115,6 +113,7 @@ public class PlayerTilt : MonoBehaviour {
 		{
 			animator.SetFloat ("ZMovement",dampTimeBack);
 			transform.Translate (0, 0, -speed);
+            rb.AddForce(0, 0.4f, 0);
 
 		
 		}

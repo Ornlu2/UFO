@@ -33,7 +33,6 @@ public class AbducterBeam : MonoBehaviour {
 		}
 	}
 
-
 	void MoveToObject()
 	{
 		GameObject[] objectsHeld = GameObject.FindGameObjectsWithTag ("PickedUp");
@@ -55,8 +54,8 @@ public class AbducterBeam : MonoBehaviour {
 
 
 		Vector3 sphereLocation = new Vector3 (transform.position.x, transform.position.y - Height+1, transform.position.z);
-			
-		var colliders = Physics.OverlapSphere (sphereLocation, 7);
+
+        var colliders = Physics.OverlapSphere (sphereLocation, 20);
 
 		foreach (var gameObject in colliders ) {
 
@@ -77,11 +76,11 @@ public class AbducterBeam : MonoBehaviour {
 
 
 	private void OnDrawGizmos() {
-		Vector3 sphereLocation = new Vector3 (transform.position.x, transform.position.y - Height, transform.position.z);
+		Vector3 sphereLocation = new Vector3 (transform.position.x, transform.position.y , transform.position.z);
 
 		Gizmos.color = Color.red;
-			//Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
-		Gizmos.DrawWireSphere (sphereLocation, 5);
+			//Use the same vars you use to draw your Overlap Sphere to draw your Wire Sphere.
+		Gizmos.DrawWireSphere (sphereLocation, 20);
 	}
 
 
